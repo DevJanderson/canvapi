@@ -6,10 +6,12 @@ const props = defineProps<{
   title?: string
   version?: string
   activeFilter: HttpMethod | null
+  theme: 'dark' | 'light'
 }>()
 
 const emit = defineEmits<{
   filter: [method: HttpMethod | null]
+  toggleTheme: []
 }>()
 
 const methods: { label: string; value: HttpMethod | null }[] = [
@@ -55,5 +57,9 @@ function toggleFilter(method: HttpMethod | null) {
     <div class="canvapi-header__url">
       <span class="canvapi-header__url-text">{{ specUrl }}</span>
     </div>
+
+    <button class="canvapi-header__theme" title="Toggle theme" @click="emit('toggleTheme')">
+      {{ theme === 'dark' ? '☀️' : '🌙' }}
+    </button>
   </header>
 </template>

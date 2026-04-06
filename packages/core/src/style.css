@@ -97,6 +97,15 @@
   @apply font-mono text-[11px] text-cv-text-muted truncate max-w-[280px];
 }
 
+.canvapi-header__theme {
+  @apply w-7 h-7 flex items-center justify-center rounded-cv-sm border-none
+         bg-transparent cursor-pointer transition-colors duration-150 text-sm shrink-0;
+}
+
+.canvapi-header__theme:hover {
+  @apply bg-cv-surface-hover;
+}
+
 /* --- Main layout (sidebar + canvas) --- */
 
 .canvapi-main {
