@@ -1,456 +1,324 @@
-/* Canvapi — Dark-first, editorial, clean */
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
 
-.canvapi {
-  --c-bg: #0a0a0b;
-  --c-surface: #141416;
-  --c-surface-hover: #1c1c1f;
-  --c-border: #27272a;
-  --c-border-subtle: #1e1e21;
-  --c-text: #fafafa;
-  --c-text-secondary: #a1a1aa;
-  --c-text-muted: #71717a;
-  --c-accent: #818cf8;
+/* Canvapi — Design tokens via Tailwind v4 @theme */
 
-  --c-get: #22c55e;
-  --c-post: #3b82f6;
-  --c-put: #f59e0b;
-  --c-delete: #ef4444;
-  --c-patch: #a855f7;
+@theme {
+  --color-cv-bg: #0a0a0b;
+  --color-cv-surface: #141416;
+  --color-cv-surface-hover: #1c1c1f;
+  --color-cv-border: #27272a;
+  --color-cv-border-subtle: #1e1e21;
+  --color-cv-text: #fafafa;
+  --color-cv-text-secondary: #a1a1aa;
+  --color-cv-text-muted: #71717a;
+  --color-cv-accent: #818cf8;
+  --color-cv-get: #22c55e;
+  --color-cv-post: #3b82f6;
+  --color-cv-put: #f59e0b;
+  --color-cv-delete: #ef4444;
+  --color-cv-patch: #a855f7;
 
-  --radius: 10px;
-  --radius-sm: 6px;
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
-  font-family: var(--font);
-  background: var(--c-bg);
-  color: var(--c-text);
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  --radius-cv: 10px;
+  --radius-cv-sm: 6px;
+}
+
+/* --- Root --- */
+
+.canvapi {
+  @apply font-sans bg-cv-bg text-cv-text w-full h-screen flex flex-col overflow-hidden;
 }
 
 .canvapi[data-theme='light'] {
-  --c-bg: #fafafa;
-  --c-surface: #ffffff;
-  --c-surface-hover: #f4f4f5;
-  --c-border: #e4e4e7;
-  --c-border-subtle: #f0f0f2;
-  --c-text: #09090b;
-  --c-text-secondary: #52525b;
-  --c-text-muted: #a1a1aa;
+  --color-cv-bg: #fafafa;
+  --color-cv-surface: #ffffff;
+  --color-cv-surface-hover: #f4f4f5;
+  --color-cv-border: #e4e4e7;
+  --color-cv-border-subtle: #f0f0f2;
+  --color-cv-text: #09090b;
+  --color-cv-text-secondary: #52525b;
+  --color-cv-text-muted: #a1a1aa;
 }
 
 /* --- Header --- */
 
 .canvapi-header {
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--c-border);
-  background: var(--c-surface);
-  flex-shrink: 0;
+  @apply px-5 py-3 border-b border-cv-border bg-cv-surface shrink-0;
 }
 
 .canvapi-header__top {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 10px;
+  @apply flex items-center gap-4 mb-2.5;
 }
 
 .canvapi-header__brand {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--c-text);
+  @apply text-[15px] font-bold tracking-tight text-cv-text;
 }
 
 .canvapi-header__url {
-  background: var(--c-bg);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius-sm);
-  padding: 6px 12px;
-  flex: 1;
-  max-width: 480px;
+  @apply bg-cv-bg border border-cv-border rounded-cv-sm px-3 py-1.5 flex-1 max-w-[480px];
 }
 
 .canvapi-header__url-text {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--c-text-secondary);
+  @apply font-mono text-xs text-cv-text-secondary;
 }
 
 .canvapi-header__info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
+  @apply flex items-center gap-2 ml-auto;
 }
 
 .canvapi-header__title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--c-text-secondary);
+  @apply text-[13px] font-medium text-cv-text-secondary;
 }
 
 .canvapi-header__version {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--c-text-muted);
-  background: var(--c-bg);
-  padding: 2px 6px;
-  border-radius: 4px;
+  @apply font-mono text-[11px] text-cv-text-muted bg-cv-bg px-1.5 py-0.5 rounded;
 }
 
 .canvapi-header__filters {
-  display: flex;
-  gap: 6px;
+  @apply flex gap-1.5;
 }
 
 .canvapi-filter {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 4px;
-  border: 1px solid var(--c-border);
-  background: transparent;
-  color: var(--c-text-muted);
-  cursor: pointer;
-  transition: all 0.15s ease;
+  @apply font-mono text-[11px] font-medium px-2.5 py-1 rounded border border-cv-border
+         bg-transparent text-cv-text-muted cursor-pointer transition-all duration-150;
 }
 
 .canvapi-filter:hover {
-  background: var(--c-surface-hover);
-  color: var(--c-text-secondary);
+  @apply bg-cv-surface-hover text-cv-text-secondary;
 }
 
 .canvapi-filter--active {
-  background: var(--c-surface-hover);
+  @apply bg-cv-surface-hover;
 }
 
 /* --- Canvas --- */
 
 .canvapi-canvas {
-  flex: 1;
-  overflow: hidden;
+  @apply flex-1 overflow-hidden;
 }
 
 .canvapi-flow {
-  width: 100%;
-  height: 100%;
-  background: var(--c-bg);
+  @apply w-full h-full bg-cv-bg;
 }
 
 .canvapi-flow .vue-flow__edge-path {
-  stroke: var(--c-border);
+  stroke: var(--color-cv-border);
   stroke-width: 1.5;
 }
 
 .canvapi-flow .vue-flow__edge.animated .vue-flow__edge-path {
-  stroke: var(--c-accent);
+  stroke: var(--color-cv-accent);
   stroke-dasharray: 5;
 }
 
 .canvapi-flow .vue-flow__edge-text {
-  font-size: 10px;
-  fill: var(--c-text-muted);
+  @apply text-[10px];
+  fill: var(--color-cv-text-muted);
 }
 
 .canvapi-minimap {
-  background: var(--c-surface) !important;
-  border: 1px solid var(--c-border) !important;
-  border-radius: var(--radius-sm) !important;
+  background: var(--color-cv-surface) !important;
+  border: 1px solid var(--color-cv-border) !important;
+  @apply !rounded-cv-sm;
 }
 
-/* --- Nodes (shared) --- */
+/* --- Canvas Nodes (shared) --- */
 
 .canvapi-node {
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius);
-  min-width: 200px;
-  max-width: 280px;
-  overflow: hidden;
-  font-size: 12px;
+  @apply bg-cv-surface border border-cv-border overflow-hidden text-xs
+         min-w-[200px] max-w-[280px] transition-colors duration-150;
+  border-radius: var(--radius-cv);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  transition: border-color 0.15s ease;
 }
 
 .canvapi-node:hover {
-  border-color: var(--c-accent);
+  @apply border-cv-accent;
 }
 
 .canvapi-node__header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--c-border-subtle);
+  @apply flex items-center gap-1.5 px-3 py-2 border-b border-cv-border-subtle;
 }
 
 .canvapi-node__icon {
-  font-size: 12px;
+  @apply text-xs;
 }
 
 .canvapi-node__title {
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--c-text);
-  letter-spacing: -0.01em;
+  @apply font-semibold text-[13px] text-cv-text tracking-tight;
 }
 
 .canvapi-node__badge {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
-  background: var(--c-bg);
-  padding: 1px 6px;
-  border-radius: 4px;
+  @apply ml-auto font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-px rounded;
 }
 
 .canvapi-node__body {
-  padding: 6px 0;
+  @apply py-1.5;
 }
 
-/* --- Auth Node --- */
+/* Auth Node */
 
 .canvapi-node--auth {
-  border-color: var(--c-accent);
+  @apply border-cv-accent;
 }
 
 .canvapi-auth__scheme {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
+  @apply flex items-center gap-1.5 px-3 py-1;
 }
 
 .canvapi-auth__type {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--c-accent);
+  @apply font-mono text-[10px] font-semibold text-cv-accent px-1.5 py-px rounded-sm;
   background: rgba(129, 140, 248, 0.1);
-  padding: 1px 6px;
-  border-radius: 3px;
 }
 
 .canvapi-auth__name {
-  font-size: 11px;
-  color: var(--c-text-secondary);
+  @apply text-[11px] text-cv-text-secondary;
 }
 
 .canvapi-auth__detail {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
+  @apply font-mono text-[10px] text-cv-text-muted;
 }
 
-/* --- Resource Node --- */
+/* Resource Node */
 
 .canvapi-endpoint {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 12px;
-  transition: background 0.1s ease;
+  @apply flex items-center gap-2 px-3 py-0.5 transition-colors duration-100;
 }
 
 .canvapi-endpoint:hover {
-  background: var(--c-surface-hover);
+  @apply bg-cv-surface-hover;
 }
 
 .canvapi-endpoint--deprecated {
-  opacity: 0.4;
-  text-decoration: line-through;
+  @apply opacity-40 line-through;
 }
 
 .canvapi-endpoint__method {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  min-width: 42px;
-  letter-spacing: 0.02em;
+  @apply font-mono text-[10px] font-bold min-w-[42px] tracking-wide;
 }
 
 .canvapi-endpoint__path {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--c-text-secondary);
+  @apply font-mono text-[11px] text-cv-text-secondary;
 }
 
-/* --- Schema Node --- */
+/* Schema Node */
 
 .canvapi-node--schema {
-  border-color: var(--c-border);
+  @apply border-cv-border;
 }
 
 .canvapi-schema__prop {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 12px;
+  @apply flex items-center gap-1.5 px-3 py-0.5;
 }
 
 .canvapi-schema__name {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--c-text);
+  @apply font-mono text-[11px] text-cv-text;
 }
 
 .canvapi-schema__required {
-  color: var(--c-delete);
-  font-weight: 700;
+  @apply text-cv-delete font-bold;
 }
 
 .canvapi-schema__type {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
-  margin-left: auto;
+  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
 }
 
 .canvapi-schema__enum {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--c-text-muted);
+  @apply font-mono text-[9px] text-cv-text-muted;
 }
 
 /* --- Loading / Error --- */
 
 .canvapi-loading,
 .canvapi-error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  font-size: 14px;
-  color: var(--c-text-secondary);
+  @apply flex items-center justify-center flex-1 text-sm text-cv-text-secondary;
 }
 
 .canvapi-error {
-  color: var(--c-delete);
+  @apply text-cv-delete;
 }
 
 /* --- Vue Flow overrides --- */
 
 .vue-flow__handle {
-  width: 6px !important;
-  height: 6px !important;
-  background: var(--c-text-muted) !important;
-  border: none !important;
+  @apply !w-1.5 !h-1.5 !border-none;
+  background: var(--color-cv-text-muted) !important;
 }
 
 .vue-flow__handle:hover {
-  background: var(--c-accent) !important;
+  background: var(--color-cv-accent) !important;
 }
 
 .vue-flow__controls {
-  border: 1px solid var(--c-border) !important;
-  border-radius: var(--radius-sm) !important;
-  overflow: hidden;
+  border: 1px solid var(--color-cv-border) !important;
+  @apply !rounded-cv-sm !overflow-hidden;
 }
 
 .vue-flow__controls-button {
-  background: var(--c-surface) !important;
-  border-color: var(--c-border) !important;
-  color: var(--c-text-secondary) !important;
-  fill: var(--c-text-secondary) !important;
+  background: var(--color-cv-surface) !important;
+  border-color: var(--color-cv-border) !important;
+  color: var(--color-cv-text-secondary) !important;
+  fill: var(--color-cv-text-secondary) !important;
 }
 
 .vue-flow__controls-button:hover {
-  background: var(--c-surface-hover) !important;
+  background: var(--color-cv-surface-hover) !important;
 }
 
 /* --- Dashboard --- */
 
 .canvapi-dashboard {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: hidden;
-  gap: 1px;
-  background: var(--c-border-subtle);
+  @apply flex flex-col flex-1 overflow-hidden gap-px;
+  background: var(--color-cv-border-subtle);
 }
 
 .canvapi-dashboard__row {
-  display: flex;
-  gap: 1px;
-  flex-shrink: 0;
+  @apply flex gap-px shrink-0;
 }
 
 .canvapi-dashboard__row--top .canvapi-block {
-  flex: 1;
-  min-width: 0;
+  @apply flex-1 min-w-0;
 }
 
 .canvapi-dashboard__row--bottom .canvapi-block {
-  flex: 1;
-  min-width: 0;
-  max-height: 240px;
-  overflow-y: auto;
+  @apply flex-1 min-w-0 max-h-60 overflow-y-auto;
 }
 
 .canvapi-dashboard__canvas {
-  flex: 1;
-  min-height: 300px;
-  overflow: hidden;
-  position: relative;
+  @apply flex-1 min-h-[300px] overflow-hidden relative;
 }
 
 .canvapi-dashboard__canvas .canvapi-canvas {
-  position: absolute;
-  inset: 0;
+  @apply absolute inset-0;
 }
 
 .canvapi-dashboard__hidden {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  background: var(--c-surface);
-  flex-shrink: 0;
+  @apply flex items-center gap-1.5 px-4 py-1.5 bg-cv-surface shrink-0;
 }
 
 .canvapi-dashboard__hidden-label {
-  font-size: 11px;
-  color: var(--c-text-muted);
+  @apply text-[11px] text-cv-text-muted;
 }
 
 .canvapi-dashboard__hidden-btn {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--c-border);
-  background: transparent;
-  color: var(--c-text-secondary);
-  cursor: pointer;
-  transition: all 0.15s ease;
+  @apply font-mono text-[10px] px-2 py-0.5 rounded border border-cv-border
+         bg-transparent text-cv-text-secondary cursor-pointer transition-all duration-150;
 }
 
 .canvapi-dashboard__hidden-btn:hover {
-  background: var(--c-surface-hover);
-  color: var(--c-text);
+  @apply bg-cv-surface-hover text-cv-text;
 }
 
 /* --- Block Wrapper --- */
 
 .canvapi-block {
-  background: var(--c-surface);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  @apply bg-cv-surface overflow-hidden flex flex-col;
 }
 
 .canvapi-block--expanded {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  max-height: none !important;
+  @apply fixed inset-0 z-[100] !max-h-none;
 }
 
 .canvapi-block--minimized {
@@ -458,314 +326,201 @@
 }
 
 .canvapi-block__header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-bottom: 1px solid var(--c-border-subtle);
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
+  @apply flex items-center gap-1.5 px-3 py-1.5 border-b border-cv-border-subtle
+         cursor-pointer select-none shrink-0;
 }
 
 .canvapi-block__header:hover {
-  background: var(--c-surface-hover);
+  @apply bg-cv-surface-hover;
 }
 
 .canvapi-block__icon {
-  font-size: 11px;
+  @apply text-[11px];
 }
 
 .canvapi-block__title {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--c-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  @apply text-[11px] font-semibold text-cv-text-secondary uppercase tracking-widest;
 }
 
 .canvapi-block__controls {
-  margin-left: auto;
-  display: flex;
-  gap: 2px;
+  @apply ml-auto flex gap-0.5;
 }
 
 .canvapi-block__btn {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  border: none;
-  background: transparent;
-  color: var(--c-text-muted);
-  cursor: pointer;
-  border-radius: 3px;
-  transition: all 0.1s ease;
+  @apply w-5 h-5 flex items-center justify-center text-xs border-none bg-transparent
+         text-cv-text-muted cursor-pointer rounded-sm transition-all duration-100;
 }
 
 .canvapi-block__btn:hover {
-  background: var(--c-bg);
-  color: var(--c-text);
+  @apply bg-cv-bg text-cv-text;
 }
 
 .canvapi-block__body {
-  padding: 8px 12px;
-  overflow-y: auto;
-  flex: 1;
+  @apply px-3 py-2 overflow-y-auto flex-1;
 }
 
 /* --- Overview Block --- */
 
 .canvapi-overview__row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
+  @apply flex items-center gap-2 mb-1;
 }
 
 .canvapi-overview__label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--c-text);
+  @apply text-[13px] font-semibold text-cv-text;
 }
 
 .canvapi-overview__badge {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
-  background: var(--c-bg);
-  padding: 1px 6px;
-  border-radius: 4px;
+  @apply font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-px rounded;
 }
 
 .canvapi-overview__desc {
-  font-size: 12px;
-  color: var(--c-text-secondary);
-  line-height: 1.4;
-  margin-bottom: 4px;
+  @apply text-xs text-cv-text-secondary leading-relaxed mb-1;
 }
 
 .canvapi-overview__meta {
-  display: flex;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--c-text-muted);
+  @apply flex gap-2 text-[11px] text-cv-text-muted;
 }
 
 .canvapi-overview__email {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  @apply font-mono text-[10px];
 }
 
 /* --- Servers Block --- */
 
 .canvapi-servers__item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 0;
-  cursor: pointer;
+  @apply flex items-center gap-2 py-0.5 cursor-pointer;
 }
 
 .canvapi-servers__dot {
-  font-size: 8px;
-  color: var(--c-text-muted);
+  @apply text-[8px] text-cv-text-muted;
 }
 
 .canvapi-servers__dot--active {
-  color: var(--c-get);
+  @apply text-cv-get;
 }
 
 .canvapi-servers__url {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--c-text);
+  @apply font-mono text-[11px] text-cv-text;
 }
 
 .canvapi-servers__desc {
-  font-size: 10px;
-  color: var(--c-text-muted);
+  @apply text-[10px] text-cv-text-muted;
 }
 
 /* --- Auth Block --- */
 
 .canvapi-auth-block__item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 0;
+  @apply flex items-center gap-1.5 py-0.5;
 }
 
 .canvapi-auth-block__type {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--c-accent);
+  @apply font-mono text-[10px] font-semibold text-cv-accent px-1.5 py-px rounded-sm;
   background: rgba(129, 140, 248, 0.1);
-  padding: 1px 6px;
-  border-radius: 3px;
 }
 
 .canvapi-auth-block__name {
-  font-size: 11px;
-  color: var(--c-text-secondary);
+  @apply text-[11px] text-cv-text-secondary;
 }
 
 .canvapi-auth-block__detail {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
+  @apply font-mono text-[10px] text-cv-text-muted;
 }
 
 .canvapi-auth-block__empty {
-  font-size: 11px;
-  color: var(--c-text-muted);
+  @apply text-[11px] text-cv-text-muted;
 }
 
 /* --- Schemas Block --- */
 
 .canvapi-schemas-block__item {
-  margin-bottom: 2px;
+  @apply mb-0.5;
 }
 
 .canvapi-schemas-block__header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 0;
-  cursor: pointer;
+  @apply flex items-center gap-1.5 py-0.5 cursor-pointer;
 }
 
 .canvapi-schemas-block__header:hover {
-  color: var(--c-text);
+  @apply text-cv-text;
 }
 
 .canvapi-schemas-block__arrow {
-  font-size: 9px;
-  color: var(--c-text-muted);
-  width: 12px;
+  @apply text-[9px] text-cv-text-muted w-3;
 }
 
 .canvapi-schemas-block__name {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--c-text);
+  @apply font-mono text-xs font-semibold text-cv-text;
 }
 
 .canvapi-schemas-block__count {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
-  margin-left: auto;
+  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
 }
 
 .canvapi-schemas-block__props {
-  padding-left: 18px;
+  @apply pl-[18px];
 }
 
 .canvapi-schemas-block__prop {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 0;
+  @apply flex items-center gap-1.5 py-0.5;
 }
 
 .canvapi-schemas-block__prop-name {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--c-text-secondary);
+  @apply font-mono text-[11px] text-cv-text-secondary;
 }
 
 .canvapi-schemas-block__required {
-  color: var(--c-delete);
-  font-weight: 700;
+  @apply text-cv-delete font-bold;
 }
 
 .canvapi-schemas-block__prop-type {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
-  margin-left: auto;
+  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
 }
 
 /* --- Parameters Block --- */
 
 .canvapi-params-block__group {
-  margin-bottom: 6px;
+  @apply mb-1.5;
 }
 
 .canvapi-params-block__group-title {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--c-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 2px;
+  @apply text-[10px] font-semibold text-cv-text-muted uppercase tracking-widest mb-0.5;
 }
 
 .canvapi-params-block__item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 0;
+  @apply flex items-center gap-1.5 py-0.5;
 }
 
 .canvapi-params-block__name {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--c-text);
+  @apply font-mono text-[11px] text-cv-text;
 }
 
 .canvapi-params-block__required {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--c-delete);
+  @apply font-mono text-[9px] text-cv-delete px-1 rounded-sm;
   background: rgba(239, 68, 68, 0.1);
-  padding: 0 4px;
-  border-radius: 2px;
 }
 
 .canvapi-params-block__type {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
-  margin-left: auto;
+  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
 }
 
 /* --- Responses Block --- */
 
 .canvapi-responses-block__item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 0;
+  @apply flex items-center gap-1.5 py-0.5;
 }
 
 .canvapi-responses-block__icon {
-  font-size: 11px;
-  width: 16px;
-  text-align: center;
+  @apply text-[11px] w-4 text-center;
 }
 
 .canvapi-responses-block__code {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--c-text);
-  min-width: 32px;
+  @apply font-mono text-xs font-semibold text-cv-text min-w-[32px];
 }
 
 .canvapi-responses-block__desc {
-  font-size: 11px;
-  color: var(--c-text-secondary);
+  @apply text-[11px] text-cv-text-secondary;
 }
 
 .canvapi-responses-block__count {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--c-text-muted);
-  margin-left: auto;
+  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
 }

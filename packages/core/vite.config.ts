@@ -1,9 +1,10 @@
 import { resolve } from 'node:path'
 import vue from '@vitejs/plugin-vue'
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [tailwindcss(), vue()],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -16,6 +17,7 @@ export default defineConfig({
       formats: ['es'],
       fileName: 'index',
     },
+    cssCodeSplit: false,
     rollupOptions: {
       external: ['vue', '@vue-flow/core'],
       output: {
