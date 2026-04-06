@@ -15,3 +15,14 @@ export type {
   Server,
   Webhook,
 } from './parser'
+export { buildCanvasGraph } from './canvas'
+export type {
+  CanvasGraph,
+  CanvasNode,
+  CanvasEdge,
+  CanvasNodeType,
+  CanvasEdgeType,
+  AuthNodeData,
+  ResourceNodeData,
+  SchemaNodeData,
+} from './canvas'
