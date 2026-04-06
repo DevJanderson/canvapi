@@ -30,7 +30,7 @@ function buildAuthEdges(
         id: `auth-to-${resourceId}`,
         source: 'auth',
         target: resourceId,
-        type: 'auth-dependency',
+        class: 'canvapi-edge--auth',
         animated: true,
       })
     }
@@ -56,7 +56,7 @@ function buildSchemaReferenceEdges(
         id: `${sourceId}-to-${targetId}`,
         source: sourceId,
         target: targetId,
-        type: 'schema-reference',
+        class: 'canvapi-edge--schema',
         label: ref,
       })
     }
@@ -98,7 +98,7 @@ function buildResourceDependencyEdges(
         id: `${sourceId}-to-${targetId}`,
         source: sourceId,
         target: targetId,
-        type: 'resource-dependency',
+        class: 'canvapi-edge--resource',
         label: shared.join(', '),
       })
     }

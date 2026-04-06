@@ -320,4 +320,58 @@ describe('parseSpec', () => {
       expect(webhooks[0].requestBody).toBeDefined()
     })
   })
+
+  describe('YAML support', () => {
+    const YAML_SPEC = `
+openapi: "3.1.0"
+info:
+  title: YAML API
+  version: "1.0.0"
+paths:
+  /items:
+    get:
+      tags:
+        - Items
+      summary: List items
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+`
+
+    it('parses a YAML string', async () => {
+      const result = await parseSpec(YAML_SPEC)
+      expect(result.info.title).toBe('YAML API')
+      expect(result.info.version).toBe('1.0.0')
+    })
+
+    it('extracts resources from YAML', async () => {
+      const { resources } = await parseSpec(YAML_SPEC)
+      const items = resources.find((r) => r.name === 'Items')
+      expect(items).toBeDefined()
+      expect(items!.endpoints).toHaveLength(1)
+      expect(items!.endpoints[0].method).toBe('get')
+    })
+
+    it('extracts schemas from YAML', async () => {
+      const { schemas } = await parseSpec(YAML_SPEC)
+      expect(schemas).toHaveLength(1)
+      expect(schemas[0].name).toBe('Item')
+      expect(schemas[0].properties.id.type).toBe('integer')
+    })
+
+    it('parses JSON string', async () => {
+      const jsonStr = JSON.stringify(PETSTORE_SPEC)
+      const result = await parseSpec(jsonStr)
+      expect(result.info.title).toBe('Petstore API')
+    })
+  })
 })

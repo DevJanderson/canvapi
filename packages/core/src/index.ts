@@ -21,7 +21,7 @@ export type {
   CanvasNode,
   CanvasEdge,
   CanvasNodeType,
-  CanvasEdgeType,
+  CanvasEdgeCategory,
   AuthNodeData,
   ResourceNodeData,
   SchemaNodeData,

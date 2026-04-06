@@ -57,15 +57,16 @@ export interface SchemaProperty {
   enum?: unknown[]
 }
 
-/** Edge types on the canvas */
-export type CanvasEdgeType = 'auth-dependency' | 'resource-dependency' | 'schema-reference'
+/** Semantic edge categories (used as CSS class, not Vue Flow type) */
+export type CanvasEdgeCategory = 'auth-dependency' | 'resource-dependency' | 'schema-reference'
 
 /** An edge connecting two nodes */
 export interface CanvasEdge {
   id: string
   source: string
   target: string
-  type: CanvasEdgeType
+  type?: string
+  class?: string
   label?: string
   animated?: boolean
 }

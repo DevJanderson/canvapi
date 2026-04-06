@@ -6,7 +6,7 @@ import type { CanvasGraph } from './types'
 
 export type {
   CanvasEdge,
-  CanvasEdgeType,
+  CanvasEdgeCategory,
   CanvasGraph,
   CanvasNode,
   CanvasNodeType,

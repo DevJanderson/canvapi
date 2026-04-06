@@ -159,7 +159,7 @@ describe('buildCanvasGraph', () => {
   describe('edges', () => {
     it('creates auth edges to secured resources', () => {
       const graph = buildCanvasGraph(MOCK_API)
-      const authEdges = graph.edges.filter((e) => e.type === 'auth-dependency')
+      const authEdges = graph.edges.filter((e) => e.class === 'canvapi-edge--auth')
       expect(authEdges).toHaveLength(1)
       expect(authEdges[0].source).toBe('auth')
       expect(authEdges[0].target).toBe('resource-Users')
@@ -169,14 +169,14 @@ describe('buildCanvasGraph', () => {
     it('does not create auth edge to unsecured resources', () => {
       const graph = buildCanvasGraph(MOCK_API)
       const authToProducts = graph.edges.find(
-        (e) => e.type === 'auth-dependency' && e.target === 'resource-Products',
+        (e) => e.class === 'canvapi-edge--auth' && e.target === 'resource-Products',
       )
       expect(authToProducts).toBeUndefined()
     })
 
     it('creates schema reference edges', () => {
       const graph = buildCanvasGraph(MOCK_API)
-      const schemaEdges = graph.edges.filter((e) => e.type === 'schema-reference')
+      const schemaEdges = graph.edges.filter((e) => e.class === 'canvapi-edge--schema')
       expect(schemaEdges).toHaveLength(1)
       expect(schemaEdges[0].source).toBe('schema-Order')
       expect(schemaEdges[0].target).toBe('schema-User')
@@ -190,7 +190,7 @@ describe('buildCanvasGraph', () => {
       const graph = buildCanvasGraph(noAuth)
       const authNode = graph.nodes.find((n) => n.type === 'auth')
       expect(authNode).toBeUndefined()
-      const authEdges = graph.edges.filter((e) => e.type === 'auth-dependency')
+      const authEdges = graph.edges.filter((e) => e.class === 'canvapi-edge--auth')
       expect(authEdges).toHaveLength(0)
     })
 
