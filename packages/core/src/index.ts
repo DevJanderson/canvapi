@@ -26,3 +26,5 @@ export type {
   ResourceNodeData,
   SchemaNodeData,
 } from './canvas'
+export { useCanvapi } from './composables/useCanvapi'
+export type { UseCanvapiOptions, UseCanvapiReturn } from './composables/useCanvapi'

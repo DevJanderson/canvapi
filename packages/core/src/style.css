@@ -1,0 +1,366 @@
+/* Canvapi — Dark-first, editorial, clean */
+
+.canvapi {
+  --c-bg: #0a0a0b;
+  --c-surface: #141416;
+  --c-surface-hover: #1c1c1f;
+  --c-border: #27272a;
+  --c-border-subtle: #1e1e21;
+  --c-text: #fafafa;
+  --c-text-secondary: #a1a1aa;
+  --c-text-muted: #71717a;
+  --c-accent: #818cf8;
+
+  --c-get: #22c55e;
+  --c-post: #3b82f6;
+  --c-put: #f59e0b;
+  --c-delete: #ef4444;
+  --c-patch: #a855f7;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  font-family: var(--font);
+  background: var(--c-bg);
+  color: var(--c-text);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.canvapi[data-theme='light'] {
+  --c-bg: #fafafa;
+  --c-surface: #ffffff;
+  --c-surface-hover: #f4f4f5;
+  --c-border: #e4e4e7;
+  --c-border-subtle: #f0f0f2;
+  --c-text: #09090b;
+  --c-text-secondary: #52525b;
+  --c-text-muted: #a1a1aa;
+}
+
+/* --- Header --- */
+
+.canvapi-header {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--c-border);
+  background: var(--c-surface);
+  flex-shrink: 0;
+}
+
+.canvapi-header__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.canvapi-header__brand {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+}
+
+.canvapi-header__url {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  flex: 1;
+  max-width: 480px;
+}
+
+.canvapi-header__url-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--c-text-secondary);
+}
+
+.canvapi-header__info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.canvapi-header__title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-text-secondary);
+}
+
+.canvapi-header__version {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-text-muted);
+  background: var(--c-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.canvapi-header__filters {
+  display: flex;
+  gap: 6px;
+}
+
+.canvapi-filter {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--c-border);
+  background: transparent;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.canvapi-filter:hover {
+  background: var(--c-surface-hover);
+  color: var(--c-text-secondary);
+}
+
+.canvapi-filter--active {
+  background: var(--c-surface-hover);
+}
+
+/* --- Canvas --- */
+
+.canvapi-canvas {
+  flex: 1;
+  overflow: hidden;
+}
+
+.canvapi-flow {
+  width: 100%;
+  height: 100%;
+  background: var(--c-bg);
+}
+
+.canvapi-flow .vue-flow__edge-path {
+  stroke: var(--c-border);
+  stroke-width: 1.5;
+}
+
+.canvapi-flow .vue-flow__edge.animated .vue-flow__edge-path {
+  stroke: var(--c-accent);
+  stroke-dasharray: 5;
+}
+
+.canvapi-flow .vue-flow__edge-text {
+  font-size: 10px;
+  fill: var(--c-text-muted);
+}
+
+.canvapi-minimap {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+/* --- Nodes (shared) --- */
+
+.canvapi-node {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  min-width: 200px;
+  max-width: 280px;
+  overflow: hidden;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.15s ease;
+}
+
+.canvapi-node:hover {
+  border-color: var(--c-accent);
+}
+
+.canvapi-node__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--c-border-subtle);
+}
+
+.canvapi-node__icon {
+  font-size: 12px;
+}
+
+.canvapi-node__title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--c-text);
+  letter-spacing: -0.01em;
+}
+
+.canvapi-node__badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--c-text-muted);
+  background: var(--c-bg);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.canvapi-node__body {
+  padding: 6px 0;
+}
+
+/* --- Auth Node --- */
+
+.canvapi-node--auth {
+  border-color: var(--c-accent);
+}
+
+.canvapi-auth__scheme {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+}
+
+.canvapi-auth__type {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--c-accent);
+  background: rgba(129, 140, 248, 0.1);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.canvapi-auth__name {
+  font-size: 11px;
+  color: var(--c-text-secondary);
+}
+
+.canvapi-auth__detail {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--c-text-muted);
+}
+
+/* --- Resource Node --- */
+
+.canvapi-endpoint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 12px;
+  transition: background 0.1s ease;
+}
+
+.canvapi-endpoint:hover {
+  background: var(--c-surface-hover);
+}
+
+.canvapi-endpoint--deprecated {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.canvapi-endpoint__method {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 42px;
+  letter-spacing: 0.02em;
+}
+
+.canvapi-endpoint__path {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-text-secondary);
+}
+
+/* --- Schema Node --- */
+
+.canvapi-node--schema {
+  border-color: var(--c-border);
+}
+
+.canvapi-schema__prop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+}
+
+.canvapi-schema__name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-text);
+}
+
+.canvapi-schema__required {
+  color: var(--c-delete);
+  font-weight: 700;
+}
+
+.canvapi-schema__type {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--c-text-muted);
+  margin-left: auto;
+}
+
+.canvapi-schema__enum {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--c-text-muted);
+}
+
+/* --- Loading / Error --- */
+
+.canvapi-loading,
+.canvapi-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: 14px;
+  color: var(--c-text-secondary);
+}
+
+.canvapi-error {
+  color: var(--c-delete);
+}
+
+/* --- Vue Flow overrides --- */
+
+.vue-flow__handle {
+  width: 6px !important;
+  height: 6px !important;
+  background: var(--c-text-muted) !important;
+  border: none !important;
+}
+
+.vue-flow__handle:hover {
+  background: var(--c-accent) !important;
+}
+
+.vue-flow__controls {
+  border: 1px solid var(--c-border) !important;
+  border-radius: var(--radius-sm) !important;
+  overflow: hidden;
+}
+
+.vue-flow__controls-button {
+  background: var(--c-surface) !important;
+  border-color: var(--c-border) !important;
+  color: var(--c-text-secondary) !important;
+  fill: var(--c-text-secondary) !important;
+}
+
+.vue-flow__controls-button:hover {
+  background: var(--c-surface-hover) !important;
+}

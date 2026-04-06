@@ -1,20 +1,45 @@
 <script setup lang="ts">
 import type { CanvapiProps } from './types'
+import { useCanvapi } from './composables/useCanvapi'
+import CanvapiHeader from './components/CanvapiHeader.vue'
+import CanvapiCanvas from './components/CanvapiCanvas.vue'
+import './style.css'
 
-withDefaults(defineProps<CanvapiProps>(), {
+const props = withDefaults(defineProps<CanvapiProps>(), {
   theme: 'dark',
   layout: 'overview',
 })
+
+const { api, filteredGraph, loading, error, methodFilter } = useCanvapi({
+  specUrl: props.specUrl,
+})
+
+function onFilter(method: typeof methodFilter.value) {
+  methodFilter.value = method
+}
 </script>
 
 <template>
   <div class="canvapi" :data-theme="theme">
-    <p>Canvapi — em construção</p>
+    <CanvapiHeader
+      :spec-url="specUrl"
+      :title="api?.info.title"
+      :version="api?.info.version"
+      :active-filter="methodFilter"
+      @filter="onFilter"
+    />
+
+    <div v-if="loading" class="canvapi-loading">
+      Loading spec...
+    </div>
+
+    <div v-else-if="error" class="canvapi-error">
+      {{ error }}
+    </div>
+
+    <CanvapiCanvas
+      v-else-if="filteredGraph"
+      :graph="filteredGraph"
+    />
   </div>
 </template>
-
-<style scoped>
-.canvapi {
-  font-family: system-ui, -apple-system, sans-serif;
-}
-</style>
