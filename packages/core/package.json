@@ -8,10 +8,14 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": {
+      "development": "./src/style.css",
+      "default": "./dist/style.css"
+    }
   },
   "files": [
     "dist"
@@ -35,8 +39,5 @@
     "vitest": "^3.0.0",
     "vue": "^3.5.0",
     "vue-tsc": "^2.2.0"
-  },
-  "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^15.3.5"
   }
 }
