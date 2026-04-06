@@ -22,7 +22,7 @@ const { fitView } = useVueFlow()
 function onNodesInitialized() {
   // eslint-disable-next-line no-undef
   globalThis.setTimeout(() => {
-    fitView({ padding: 0.15, duration: 300 })
+    fitView({ padding: 0.25, duration: 300 })
   }, 100)
 }
 </script>
