@@ -1,7 +1,7 @@
 @import "tailwindcss/theme" layer(theme);
 @import "tailwindcss/utilities" layer(utilities);
 
-/* Canvapi — Design tokens via Tailwind v4 @theme */
+/* Canvapi — Design tokens */
 
 @theme {
   --color-cv-bg: #0a0a0b;
@@ -43,47 +43,35 @@
   --color-cv-text-muted: #a1a1aa;
 }
 
-/* --- Header --- */
+/* --- Header (compact, one line) --- */
 
 .canvapi-header {
-  @apply px-5 py-3 border-b border-cv-border bg-cv-surface shrink-0;
-}
-
-.canvapi-header__top {
-  @apply flex items-center gap-4 mb-2.5;
+  @apply flex items-center gap-4 px-4 h-11 border-b border-cv-border bg-cv-surface shrink-0;
 }
 
 .canvapi-header__brand {
-  @apply text-[15px] font-bold tracking-tight text-cv-text;
+  @apply text-sm font-bold tracking-[-0.04em] text-cv-text;
 }
 
-.canvapi-header__url {
-  @apply bg-cv-bg border border-cv-border rounded-cv-sm px-3 py-1.5 flex-1 max-w-[480px];
-}
-
-.canvapi-header__url-text {
-  @apply font-mono text-xs text-cv-text-secondary;
-}
-
-.canvapi-header__info {
-  @apply flex items-center gap-2 ml-auto;
+.canvapi-header__api {
+  @apply flex items-center gap-2;
 }
 
 .canvapi-header__title {
-  @apply text-[13px] font-medium text-cv-text-secondary;
+  @apply text-sm font-semibold text-cv-text-secondary tracking-tight;
 }
 
 .canvapi-header__version {
-  @apply font-mono text-[11px] text-cv-text-muted bg-cv-bg px-1.5 py-0.5 rounded;
+  @apply font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-0.5 rounded;
 }
 
 .canvapi-header__filters {
-  @apply flex gap-1.5;
+  @apply flex gap-1;
 }
 
 .canvapi-filter {
-  @apply font-mono text-[11px] font-medium px-2.5 py-1 rounded border border-cv-border
-         bg-transparent text-cv-text-muted cursor-pointer transition-all duration-150;
+  @apply font-mono text-[10px] font-semibold px-2 py-0.5 rounded
+         bg-transparent text-cv-text-muted cursor-pointer transition-all duration-150 border-none;
 }
 
 .canvapi-filter:hover {
@@ -91,17 +79,181 @@
 }
 
 .canvapi-filter--active {
+  @apply text-cv-text;
+}
+
+.canvapi-filter--get.canvapi-filter--active { @apply bg-cv-get/15 text-cv-get; }
+.canvapi-filter--post.canvapi-filter--active { @apply bg-cv-post/15 text-cv-post; }
+.canvapi-filter--put.canvapi-filter--active { @apply bg-cv-put/15 text-cv-put; }
+.canvapi-filter--delete.canvapi-filter--active { @apply bg-cv-delete/15 text-cv-delete; }
+.canvapi-filter--patch.canvapi-filter--active { @apply bg-cv-patch/15 text-cv-patch; }
+.canvapi-filter--all.canvapi-filter--active { @apply bg-cv-surface-hover text-cv-text; }
+
+.canvapi-header__spacer {
+  @apply flex-1;
+}
+
+.canvapi-header__url {
+  @apply font-mono text-[11px] text-cv-text-muted truncate max-w-[280px];
+}
+
+/* --- Main layout (sidebar + canvas) --- */
+
+.canvapi-main {
+  @apply flex flex-1 overflow-hidden;
+}
+
+.canvapi-main__canvas {
+  @apply flex-1 relative overflow-hidden;
+}
+
+/* --- Sidebar --- */
+
+.canvapi-sidebar {
+  @apply w-60 bg-cv-surface border-r border-cv-border flex flex-col shrink-0 overflow-hidden;
+}
+
+.canvapi-sidebar__search {
+  @apply px-3 py-2 border-b border-cv-border-subtle;
+}
+
+.canvapi-sidebar__input {
+  @apply w-full bg-cv-bg border border-cv-border rounded-cv-sm px-2.5 py-1.5
+         text-xs text-cv-text placeholder-cv-text-muted outline-none
+         transition-colors duration-150;
+}
+
+.canvapi-sidebar__input:focus {
+  @apply border-cv-accent;
+}
+
+.canvapi-sidebar__nav {
+  @apply flex-1 overflow-y-auto py-1;
+}
+
+.canvapi-sidebar__group {
+  @apply mb-0.5;
+}
+
+.canvapi-sidebar__group-header {
+  @apply flex items-center gap-1.5 w-full px-3 py-1.5 text-left
+         bg-transparent border-none cursor-pointer transition-colors duration-100;
+}
+
+.canvapi-sidebar__group-header:hover {
   @apply bg-cv-surface-hover;
+}
+
+.canvapi-sidebar__arrow {
+  @apply text-[9px] text-cv-text-muted w-3 shrink-0;
+}
+
+.canvapi-sidebar__group-name {
+  @apply text-xs font-semibold text-cv-text tracking-tight;
+}
+
+.canvapi-sidebar__group-count {
+  @apply ml-auto font-mono text-[10px] text-cv-text-muted;
+}
+
+.canvapi-sidebar__endpoints {
+  @apply pb-1;
+}
+
+.canvapi-sidebar__endpoint {
+  @apply flex items-center gap-2 w-full px-3 py-1 pl-6 text-left
+         bg-transparent border-none cursor-pointer transition-colors duration-100;
+}
+
+.canvapi-sidebar__endpoint:hover {
+  @apply bg-cv-surface-hover;
+}
+
+.canvapi-sidebar__endpoint--active {
+  @apply bg-cv-accent/10;
+}
+
+.canvapi-sidebar__method {
+  @apply font-mono text-[9px] font-bold px-1.5 py-px rounded shrink-0 leading-none;
+}
+
+.canvapi-sidebar__path {
+  @apply font-mono text-[11px] text-cv-text-secondary truncate;
+}
+
+/* Sidebar detail panel */
+
+.canvapi-sidebar__detail {
+  @apply border-t border-cv-border px-3 py-3 overflow-y-auto max-h-[40%] shrink-0;
+}
+
+.canvapi-sidebar__detail-header {
+  @apply flex items-center gap-2 mb-2;
+}
+
+.canvapi-sidebar__detail-path {
+  @apply font-mono text-xs text-cv-text font-semibold truncate;
+}
+
+.canvapi-sidebar__detail-summary {
+  @apply text-[11px] text-cv-text-secondary leading-relaxed mb-3;
+}
+
+.canvapi-sidebar__detail-section {
+  @apply mb-3;
+}
+
+.canvapi-sidebar__detail-title {
+  @apply text-[10px] font-semibold text-cv-text-muted uppercase tracking-widest mb-1;
+}
+
+.canvapi-sidebar__detail-param {
+  @apply flex items-center gap-1.5 py-0.5;
+}
+
+.canvapi-sidebar__detail-param-name {
+  @apply font-mono text-[11px] text-cv-text;
+}
+
+.canvapi-sidebar__detail-required {
+  @apply text-cv-delete font-bold;
+}
+
+.canvapi-sidebar__detail-param-in {
+  @apply font-mono text-[9px] text-cv-text-muted bg-cv-bg px-1 rounded;
+}
+
+.canvapi-sidebar__detail-param-type {
+  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
+}
+
+.canvapi-sidebar__detail-response {
+  @apply flex items-center gap-2 py-0.5;
+}
+
+.canvapi-sidebar__detail-status {
+  @apply font-mono text-[11px] font-semibold text-cv-text min-w-[28px];
+}
+
+.canvapi-sidebar__detail-desc {
+  @apply text-[11px] text-cv-text-secondary;
+}
+
+.canvapi-sidebar__detail-auth {
+  @apply text-[11px] text-cv-accent;
 }
 
 /* --- Canvas --- */
 
 .canvapi-canvas {
-  @apply flex-1 overflow-hidden;
+  @apply absolute inset-0 overflow-hidden;
 }
 
 .canvapi-flow {
-  @apply w-full h-full bg-cv-bg;
+  @apply w-full h-full;
+  background-color: var(--color-cv-bg);
+  background-image: radial-gradient(circle, var(--color-cv-border) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 .canvapi-flow .vue-flow__edge-path {
@@ -119,39 +271,34 @@
   fill: var(--color-cv-text-muted);
 }
 
-.canvapi-minimap {
-  background: var(--color-cv-surface) !important;
-  border: 1px solid var(--color-cv-border) !important;
-  @apply !rounded-cv-sm;
-}
-
-/* --- Canvas Nodes (shared) --- */
+/* --- Canvas Nodes --- */
 
 .canvapi-node {
   @apply bg-cv-surface border border-cv-border overflow-hidden text-xs
-         min-w-[200px] max-w-[280px] transition-colors duration-150;
+         min-w-[220px] max-w-[300px] transition-all duration-150;
   border-radius: var(--radius-cv);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .canvapi-node:hover {
   @apply border-cv-accent;
+  box-shadow: 0 4px 24px rgba(129, 140, 248, 0.15);
 }
 
 .canvapi-node__header {
-  @apply flex items-center gap-1.5 px-3 py-2 border-b border-cv-border-subtle;
+  @apply flex items-center gap-2 px-3.5 py-2.5 border-b border-cv-border-subtle;
 }
 
 .canvapi-node__icon {
-  @apply text-xs;
+  @apply text-sm;
 }
 
 .canvapi-node__title {
-  @apply font-semibold text-[13px] text-cv-text tracking-tight;
+  @apply font-semibold text-sm text-cv-text tracking-tight;
 }
 
 .canvapi-node__badge {
-  @apply ml-auto font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-px rounded;
+  @apply ml-auto font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-0.5 rounded;
 }
 
 .canvapi-node__body {
@@ -162,14 +309,15 @@
 
 .canvapi-node--auth {
   @apply border-cv-accent;
+  box-shadow: 0 4px 16px rgba(129, 140, 248, 0.1);
 }
 
 .canvapi-auth__scheme {
-  @apply flex items-center gap-1.5 px-3 py-1;
+  @apply flex items-center gap-2 px-3.5 py-1;
 }
 
 .canvapi-auth__type {
-  @apply font-mono text-[10px] font-semibold text-cv-accent px-1.5 py-px rounded-sm;
+  @apply font-mono text-[10px] font-bold text-cv-accent px-1.5 py-0.5 rounded-sm;
   background: rgba(129, 140, 248, 0.1);
 }
 
@@ -184,7 +332,7 @@
 /* Resource Node */
 
 .canvapi-endpoint {
-  @apply flex items-center gap-2 px-3 py-0.5 transition-colors duration-100;
+  @apply flex items-center gap-2 px-3.5 py-1 transition-colors duration-100;
 }
 
 .canvapi-endpoint:hover {
@@ -196,7 +344,7 @@
 }
 
 .canvapi-endpoint__method {
-  @apply font-mono text-[10px] font-bold min-w-[42px] tracking-wide;
+  @apply font-mono text-[10px] font-bold min-w-[44px] tracking-wide;
 }
 
 .canvapi-endpoint__path {
@@ -210,7 +358,7 @@
 }
 
 .canvapi-schema__prop {
-  @apply flex items-center gap-1.5 px-3 py-0.5;
+  @apply flex items-center gap-2 px-3.5 py-0.5;
 }
 
 .canvapi-schema__name {
@@ -227,6 +375,29 @@
 
 .canvapi-schema__enum {
   @apply font-mono text-[9px] text-cv-text-muted;
+}
+
+/* --- Status Bar --- */
+
+.canvapi-statusbar {
+  @apply flex items-center gap-2 px-4 h-7 border-t border-cv-border bg-cv-surface
+         shrink-0 text-[10px] text-cv-text-muted font-mono;
+}
+
+.canvapi-statusbar__sep {
+  @apply text-cv-border;
+}
+
+.canvapi-statusbar__item {
+  @apply whitespace-nowrap;
+}
+
+.canvapi-statusbar__auth {
+  @apply text-cv-accent ml-2;
+}
+
+.canvapi-statusbar__server {
+  @apply ml-auto truncate max-w-[240px];
 }
 
 /* --- Loading / Error --- */
@@ -249,278 +420,4 @@
 
 .vue-flow__handle:hover {
   background: var(--color-cv-accent) !important;
-}
-
-.vue-flow__controls {
-  border: 1px solid var(--color-cv-border) !important;
-  @apply !rounded-cv-sm !overflow-hidden;
-}
-
-.vue-flow__controls-button {
-  background: var(--color-cv-surface) !important;
-  border-color: var(--color-cv-border) !important;
-  color: var(--color-cv-text-secondary) !important;
-  fill: var(--color-cv-text-secondary) !important;
-}
-
-.vue-flow__controls-button:hover {
-  background: var(--color-cv-surface-hover) !important;
-}
-
-/* --- Dashboard --- */
-
-.canvapi-dashboard {
-  @apply flex flex-col flex-1 overflow-hidden gap-px;
-  background: var(--color-cv-border-subtle);
-}
-
-.canvapi-dashboard__row {
-  @apply flex gap-px shrink-0;
-}
-
-.canvapi-dashboard__row--top .canvapi-block {
-  @apply flex-1 min-w-0;
-}
-
-.canvapi-dashboard__row--bottom .canvapi-block {
-  @apply flex-1 min-w-0 max-h-60 overflow-y-auto;
-}
-
-.canvapi-dashboard__canvas {
-  @apply flex-1 min-h-[300px] overflow-hidden relative;
-}
-
-.canvapi-dashboard__canvas .canvapi-canvas {
-  @apply absolute inset-0;
-}
-
-.canvapi-dashboard__hidden {
-  @apply flex items-center gap-1.5 px-4 py-1.5 bg-cv-surface shrink-0;
-}
-
-.canvapi-dashboard__hidden-label {
-  @apply text-[11px] text-cv-text-muted;
-}
-
-.canvapi-dashboard__hidden-btn {
-  @apply font-mono text-[10px] px-2 py-0.5 rounded border border-cv-border
-         bg-transparent text-cv-text-secondary cursor-pointer transition-all duration-150;
-}
-
-.canvapi-dashboard__hidden-btn:hover {
-  @apply bg-cv-surface-hover text-cv-text;
-}
-
-/* --- Block Wrapper --- */
-
-.canvapi-block {
-  @apply bg-cv-surface overflow-hidden flex flex-col;
-}
-
-.canvapi-block--expanded {
-  @apply fixed inset-0 z-[100] !max-h-none;
-}
-
-.canvapi-block--minimized {
-  flex: 0 !important;
-}
-
-.canvapi-block__header {
-  @apply flex items-center gap-1.5 px-3 py-1.5 border-b border-cv-border-subtle
-         cursor-pointer select-none shrink-0;
-}
-
-.canvapi-block__header:hover {
-  @apply bg-cv-surface-hover;
-}
-
-.canvapi-block__icon {
-  @apply text-[11px];
-}
-
-.canvapi-block__title {
-  @apply text-[11px] font-semibold text-cv-text-secondary uppercase tracking-widest;
-}
-
-.canvapi-block__controls {
-  @apply ml-auto flex gap-0.5;
-}
-
-.canvapi-block__btn {
-  @apply w-5 h-5 flex items-center justify-center text-xs border-none bg-transparent
-         text-cv-text-muted cursor-pointer rounded-sm transition-all duration-100;
-}
-
-.canvapi-block__btn:hover {
-  @apply bg-cv-bg text-cv-text;
-}
-
-.canvapi-block__body {
-  @apply px-3 py-2 overflow-y-auto flex-1;
-}
-
-/* --- Overview Block --- */
-
-.canvapi-overview__row {
-  @apply flex items-center gap-2 mb-1;
-}
-
-.canvapi-overview__label {
-  @apply text-[13px] font-semibold text-cv-text;
-}
-
-.canvapi-overview__badge {
-  @apply font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-px rounded;
-}
-
-.canvapi-overview__desc {
-  @apply text-xs text-cv-text-secondary leading-relaxed mb-1;
-}
-
-.canvapi-overview__meta {
-  @apply flex gap-2 text-[11px] text-cv-text-muted;
-}
-
-.canvapi-overview__email {
-  @apply font-mono text-[10px];
-}
-
-/* --- Servers Block --- */
-
-.canvapi-servers__item {
-  @apply flex items-center gap-2 py-0.5 cursor-pointer;
-}
-
-.canvapi-servers__dot {
-  @apply text-[8px] text-cv-text-muted;
-}
-
-.canvapi-servers__dot--active {
-  @apply text-cv-get;
-}
-
-.canvapi-servers__url {
-  @apply font-mono text-[11px] text-cv-text;
-}
-
-.canvapi-servers__desc {
-  @apply text-[10px] text-cv-text-muted;
-}
-
-/* --- Auth Block --- */
-
-.canvapi-auth-block__item {
-  @apply flex items-center gap-1.5 py-0.5;
-}
-
-.canvapi-auth-block__type {
-  @apply font-mono text-[10px] font-semibold text-cv-accent px-1.5 py-px rounded-sm;
-  background: rgba(129, 140, 248, 0.1);
-}
-
-.canvapi-auth-block__name {
-  @apply text-[11px] text-cv-text-secondary;
-}
-
-.canvapi-auth-block__detail {
-  @apply font-mono text-[10px] text-cv-text-muted;
-}
-
-.canvapi-auth-block__empty {
-  @apply text-[11px] text-cv-text-muted;
-}
-
-/* --- Schemas Block --- */
-
-.canvapi-schemas-block__item {
-  @apply mb-0.5;
-}
-
-.canvapi-schemas-block__header {
-  @apply flex items-center gap-1.5 py-0.5 cursor-pointer;
-}
-
-.canvapi-schemas-block__header:hover {
-  @apply text-cv-text;
-}
-
-.canvapi-schemas-block__arrow {
-  @apply text-[9px] text-cv-text-muted w-3;
-}
-
-.canvapi-schemas-block__name {
-  @apply font-mono text-xs font-semibold text-cv-text;
-}
-
-.canvapi-schemas-block__count {
-  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
-}
-
-.canvapi-schemas-block__props {
-  @apply pl-[18px];
-}
-
-.canvapi-schemas-block__prop {
-  @apply flex items-center gap-1.5 py-0.5;
-}
-
-.canvapi-schemas-block__prop-name {
-  @apply font-mono text-[11px] text-cv-text-secondary;
-}
-
-.canvapi-schemas-block__required {
-  @apply text-cv-delete font-bold;
-}
-
-.canvapi-schemas-block__prop-type {
-  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
-}
-
-/* --- Parameters Block --- */
-
-.canvapi-params-block__group {
-  @apply mb-1.5;
-}
-
-.canvapi-params-block__group-title {
-  @apply text-[10px] font-semibold text-cv-text-muted uppercase tracking-widest mb-0.5;
-}
-
-.canvapi-params-block__item {
-  @apply flex items-center gap-1.5 py-0.5;
-}
-
-.canvapi-params-block__name {
-  @apply font-mono text-[11px] text-cv-text;
-}
-
-.canvapi-params-block__required {
-  @apply font-mono text-[9px] text-cv-delete px-1 rounded-sm;
-  background: rgba(239, 68, 68, 0.1);
-}
-
-.canvapi-params-block__type {
-  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
-}
-
-/* --- Responses Block --- */
-
-.canvapi-responses-block__item {
-  @apply flex items-center gap-1.5 py-0.5;
-}
-
-.canvapi-responses-block__icon {
-  @apply text-[11px] w-4 text-center;
-}
-
-.canvapi-responses-block__code {
-  @apply font-mono text-xs font-semibold text-cv-text min-w-[32px];
-}
-
-.canvapi-responses-block__desc {
-  @apply text-[11px] text-cv-text-secondary;
-}
-
-.canvapi-responses-block__count {
-  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
 }

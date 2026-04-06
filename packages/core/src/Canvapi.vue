@@ -2,7 +2,9 @@
 import type { CanvapiProps } from './types'
 import { useCanvapi } from './composables/useCanvapi'
 import CanvapiHeader from './components/CanvapiHeader.vue'
-import CanvapiDashboard from './components/CanvapiDashboard.vue'
+import CanvapiSidebar from './components/CanvapiSidebar.vue'
+import CanvapiCanvas from './components/CanvapiCanvas.vue'
+import CanvapiStatusBar from './components/CanvapiStatusBar.vue'
 import './style.css'
 
 const props = withDefaults(defineProps<CanvapiProps>(), {
@@ -37,10 +39,13 @@ function onFilter(method: typeof methodFilter.value) {
       {{ error }}
     </div>
 
-    <CanvapiDashboard
-      v-else-if="api && filteredGraph"
-      :api="api"
-      :graph="filteredGraph"
-    />
+    <div v-else-if="api && filteredGraph" class="canvapi-main">
+      <CanvapiSidebar :api="api" />
+      <div class="canvapi-main__canvas">
+        <CanvapiCanvas :graph="filteredGraph" />
+      </div>
+    </div>
+
+    <CanvapiStatusBar v-if="api" :api="api" />
   </div>
 </template>
