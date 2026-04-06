@@ -35,5 +35,8 @@
     "vitest": "^3.0.0",
     "vue": "^3.5.0",
     "vue-tsc": "^2.2.0"
+  },
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^15.3.5"
   }
 }
