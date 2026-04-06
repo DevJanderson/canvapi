@@ -1,432 +1,136 @@
-@import "tailwindcss/theme" layer(theme);
-@import "tailwindcss/utilities" layer(utilities);
-
-/* Canvapi — Design tokens */
-
-@theme {
-  --color-cv-bg: #0a0a0b;
-  --color-cv-surface: #141416;
-  --color-cv-surface-hover: #1c1c1f;
-  --color-cv-border: #27272a;
-  --color-cv-border-subtle: #1e1e21;
-  --color-cv-text: #fafafa;
-  --color-cv-text-secondary: #a1a1aa;
-  --color-cv-text-muted: #71717a;
-  --color-cv-accent: #818cf8;
-  --color-cv-get: #22c55e;
-  --color-cv-post: #3b82f6;
-  --color-cv-put: #f59e0b;
-  --color-cv-delete: #ef4444;
-  --color-cv-patch: #a855f7;
-
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
-
-  --radius-cv: 10px;
-  --radius-cv-sm: 6px;
-}
-
-/* --- Root --- */
-
-.canvapi {
-  @apply font-sans bg-cv-bg text-cv-text w-full h-screen flex flex-col overflow-hidden;
-}
-
-.canvapi[data-theme='light'] {
-  --color-cv-bg: #fafafa;
-  --color-cv-surface: #ffffff;
-  --color-cv-surface-hover: #f4f4f5;
-  --color-cv-border: #e4e4e7;
-  --color-cv-border-subtle: #f0f0f2;
-  --color-cv-text: #09090b;
-  --color-cv-text-secondary: #52525b;
-  --color-cv-text-muted: #a1a1aa;
-}
-
-/* --- Header (compact, one line) --- */
-
-.canvapi-header {
-  @apply flex items-center gap-4 px-4 h-11 border-b border-cv-border bg-cv-surface shrink-0;
-}
-
-.canvapi-header__brand {
-  @apply text-sm font-bold tracking-[-0.04em] text-cv-text;
-}
-
-.canvapi-header__api {
-  @apply flex items-center gap-2;
-}
-
-.canvapi-header__title {
-  @apply text-sm font-semibold text-cv-text-secondary tracking-tight;
-}
-
-.canvapi-header__version {
-  @apply font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-0.5 rounded;
-}
-
-.canvapi-header__filters {
-  @apply flex gap-1;
-}
-
-.canvapi-filter {
-  @apply font-mono text-[10px] font-semibold px-2 py-0.5 rounded
-         bg-transparent text-cv-text-muted cursor-pointer transition-all duration-150 border-none;
-}
-
-.canvapi-filter:hover {
-  @apply bg-cv-surface-hover text-cv-text-secondary;
-}
-
-.canvapi-filter--active {
-  @apply text-cv-text;
-}
-
-.canvapi-filter--get.canvapi-filter--active { @apply bg-cv-get/15 text-cv-get; }
-.canvapi-filter--post.canvapi-filter--active { @apply bg-cv-post/15 text-cv-post; }
-.canvapi-filter--put.canvapi-filter--active { @apply bg-cv-put/15 text-cv-put; }
-.canvapi-filter--delete.canvapi-filter--active { @apply bg-cv-delete/15 text-cv-delete; }
-.canvapi-filter--patch.canvapi-filter--active { @apply bg-cv-patch/15 text-cv-patch; }
-.canvapi-filter--all.canvapi-filter--active { @apply bg-cv-surface-hover text-cv-text; }
-
-.canvapi-header__spacer {
-  @apply flex-1;
-}
-
-.canvapi-header__url {
-  @apply font-mono text-[11px] text-cv-text-muted truncate max-w-[280px];
-}
-
-.canvapi-header__theme {
-  @apply w-7 h-7 flex items-center justify-center rounded-cv-sm border-none
-         bg-transparent cursor-pointer transition-colors duration-150 text-sm shrink-0;
-}
-
-.canvapi-header__theme:hover {
-  @apply bg-cv-surface-hover;
-}
-
-/* --- Main layout (sidebar + canvas) --- */
-
-.canvapi-main {
-  @apply flex flex-1 overflow-hidden;
-}
-
-.canvapi-main__canvas {
-  @apply flex-1 relative overflow-hidden;
-}
-
-/* --- Sidebar --- */
-
-.canvapi-sidebar {
-  @apply w-60 bg-cv-surface border-r border-cv-border flex flex-col shrink-0 overflow-hidden;
-}
-
-.canvapi-sidebar__search {
-  @apply px-3 py-2 border-b border-cv-border-subtle;
-}
-
-.canvapi-sidebar__input {
-  @apply w-full bg-cv-bg border border-cv-border rounded-cv-sm px-2.5 py-1.5
-         text-xs text-cv-text placeholder-cv-text-muted outline-none
-         transition-colors duration-150;
-}
-
-.canvapi-sidebar__input:focus {
-  @apply border-cv-accent;
-}
-
-.canvapi-sidebar__nav {
-  @apply flex-1 overflow-y-auto py-1;
-}
-
-.canvapi-sidebar__group {
-  @apply mb-0.5;
-}
-
-.canvapi-sidebar__group-header {
-  @apply flex items-center gap-1.5 w-full px-3 py-1.5 text-left
-         bg-transparent border-none cursor-pointer transition-colors duration-100;
-}
-
-.canvapi-sidebar__group-header:hover {
-  @apply bg-cv-surface-hover;
-}
-
-.canvapi-sidebar__arrow {
-  @apply text-[9px] text-cv-text-muted w-3 shrink-0;
-}
-
-.canvapi-sidebar__group-name {
-  @apply text-xs font-semibold text-cv-text tracking-tight;
-}
-
-.canvapi-sidebar__group-count {
-  @apply ml-auto font-mono text-[10px] text-cv-text-muted;
-}
-
-.canvapi-sidebar__endpoints {
-  @apply pb-1;
-}
-
-.canvapi-sidebar__endpoint {
-  @apply flex items-center gap-2 w-full px-3 py-1 pl-6 text-left
-         bg-transparent border-none cursor-pointer transition-colors duration-100;
-}
-
-.canvapi-sidebar__endpoint:hover {
-  @apply bg-cv-surface-hover;
-}
-
-.canvapi-sidebar__endpoint--active {
-  @apply bg-cv-accent/10;
-}
-
-.canvapi-sidebar__method {
-  @apply font-mono text-[9px] font-bold px-1.5 py-px rounded shrink-0 leading-none;
-}
-
-.canvapi-sidebar__path {
-  @apply font-mono text-[11px] text-cv-text-secondary truncate;
-}
-
-/* Sidebar detail panel */
-
-.canvapi-sidebar__detail {
-  @apply border-t border-cv-border px-3 py-3 overflow-y-auto max-h-[40%] shrink-0;
-}
-
-.canvapi-sidebar__detail-header {
-  @apply flex items-center gap-2 mb-2;
-}
-
-.canvapi-sidebar__detail-path {
-  @apply font-mono text-xs text-cv-text font-semibold truncate;
-}
-
-.canvapi-sidebar__detail-summary {
-  @apply text-[11px] text-cv-text-secondary leading-relaxed mb-3;
-}
-
-.canvapi-sidebar__detail-section {
-  @apply mb-3;
-}
-
-.canvapi-sidebar__detail-title {
-  @apply text-[10px] font-semibold text-cv-text-muted uppercase tracking-widest mb-1;
-}
-
-.canvapi-sidebar__detail-param {
-  @apply flex items-center gap-1.5 py-0.5;
-}
-
-.canvapi-sidebar__detail-param-name {
-  @apply font-mono text-[11px] text-cv-text;
-}
-
-.canvapi-sidebar__detail-required {
-  @apply text-cv-delete font-bold;
-}
-
-.canvapi-sidebar__detail-param-in {
-  @apply font-mono text-[9px] text-cv-text-muted bg-cv-bg px-1 rounded;
-}
-
-.canvapi-sidebar__detail-param-type {
-  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
-}
-
-.canvapi-sidebar__detail-response {
-  @apply flex items-center gap-2 py-0.5;
-}
-
-.canvapi-sidebar__detail-status {
-  @apply font-mono text-[11px] font-semibold text-cv-text min-w-[28px];
-}
-
-.canvapi-sidebar__detail-desc {
-  @apply text-[11px] text-cv-text-secondary;
-}
-
-.canvapi-sidebar__detail-auth {
-  @apply text-[11px] text-cv-accent;
-}
-
-/* --- Canvas --- */
-
-.canvapi-canvas {
-  @apply absolute inset-0 overflow-hidden;
-}
-
-.canvapi-flow {
-  @apply w-full h-full;
-  background-color: var(--color-cv-bg);
-  background-image: radial-gradient(circle, var(--color-cv-border) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-.canvapi-flow .vue-flow__edge-path {
-  stroke: var(--color-cv-border);
-  stroke-width: 1.5;
-}
-
-.canvapi-flow .vue-flow__edge.animated .vue-flow__edge-path {
-  stroke: var(--color-cv-accent);
-  stroke-dasharray: 5;
-}
-
-.canvapi-flow .vue-flow__edge-text {
-  @apply text-[10px];
-  fill: var(--color-cv-text-muted);
-}
-
-/* --- Canvas Nodes --- */
-
-.canvapi-node {
-  @apply bg-cv-surface border border-cv-border overflow-hidden text-xs
-         min-w-[220px] max-w-[300px] transition-all duration-150;
-  border-radius: var(--radius-cv);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-.canvapi-node:hover {
-  @apply border-cv-accent;
-  box-shadow: 0 4px 24px rgba(129, 140, 248, 0.15);
-}
-
-.canvapi-node__header {
-  @apply flex items-center gap-2 px-3.5 py-2.5 border-b border-cv-border-subtle;
-}
-
-.canvapi-node__icon {
-  @apply text-sm;
-}
-
-.canvapi-node__title {
-  @apply font-semibold text-sm text-cv-text tracking-tight;
-}
-
-.canvapi-node__badge {
-  @apply ml-auto font-mono text-[10px] text-cv-text-muted bg-cv-bg px-1.5 py-0.5 rounded;
-}
-
-.canvapi-node__body {
-  @apply py-1.5;
-}
-
-/* Auth Node */
-
-.canvapi-node--auth {
-  @apply border-cv-accent;
-  box-shadow: 0 4px 16px rgba(129, 140, 248, 0.1);
-}
-
-.canvapi-auth__scheme {
-  @apply flex items-center gap-2 px-3.5 py-1;
-}
-
-.canvapi-auth__type {
-  @apply font-mono text-[10px] font-bold text-cv-accent px-1.5 py-0.5 rounded-sm;
-  background: rgba(129, 140, 248, 0.1);
-}
-
-.canvapi-auth__name {
-  @apply text-[11px] text-cv-text-secondary;
-}
-
-.canvapi-auth__detail {
-  @apply font-mono text-[10px] text-cv-text-muted;
-}
-
-/* Resource Node */
-
-.canvapi-endpoint {
-  @apply flex items-center gap-2 px-3.5 py-1 transition-colors duration-100;
-}
-
-.canvapi-endpoint:hover {
-  @apply bg-cv-surface-hover;
-}
-
-.canvapi-endpoint--deprecated {
-  @apply opacity-40 line-through;
-}
-
-.canvapi-endpoint__method {
-  @apply font-mono text-[10px] font-bold min-w-[44px] tracking-wide;
-}
-
-.canvapi-endpoint__path {
-  @apply font-mono text-[11px] text-cv-text-secondary;
-}
-
-/* Schema Node */
-
-.canvapi-node--schema {
-  @apply border-cv-border;
-}
-
-.canvapi-schema__prop {
-  @apply flex items-center gap-2 px-3.5 py-0.5;
-}
-
-.canvapi-schema__name {
-  @apply font-mono text-[11px] text-cv-text;
-}
-
-.canvapi-schema__required {
-  @apply text-cv-delete font-bold;
-}
-
-.canvapi-schema__type {
-  @apply font-mono text-[10px] text-cv-text-muted ml-auto;
-}
-
-.canvapi-schema__enum {
-  @apply font-mono text-[9px] text-cv-text-muted;
-}
-
-/* --- Status Bar --- */
-
-.canvapi-statusbar {
-  @apply flex items-center gap-2 px-4 h-7 border-t border-cv-border bg-cv-surface
-         shrink-0 text-[10px] text-cv-text-muted font-mono;
-}
-
-.canvapi-statusbar__sep {
-  @apply text-cv-border;
-}
-
-.canvapi-statusbar__item {
-  @apply whitespace-nowrap;
-}
-
-.canvapi-statusbar__auth {
-  @apply text-cv-accent ml-2;
-}
-
-.canvapi-statusbar__server {
-  @apply ml-auto truncate max-w-[240px];
-}
-
-/* --- Loading / Error --- */
-
-.canvapi-loading,
-.canvapi-error {
-  @apply flex items-center justify-center flex-1 text-sm text-cv-text-secondary;
-}
-
-.canvapi-error {
-  @apply text-cv-delete;
-}
-
-/* --- Vue Flow overrides --- */
-
-.vue-flow__handle {
-  @apply !w-1.5 !h-1.5 !border-none;
-  background: var(--color-cv-text-muted) !important;
-}
-
-.vue-flow__handle:hover {
-  background: var(--color-cv-accent) !important;
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--reka-accordion-content-height); }
+  }
+
+  @keyframes accordion-up {
+    from { height: var(--reka-accordion-content-height); }
+    to { height: 0; }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
