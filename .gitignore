@@ -7,6 +7,7 @@ dist/
 build/
 .output/
 .astro/
+*.tsbuildinfo
 
 # Environment
 .env
